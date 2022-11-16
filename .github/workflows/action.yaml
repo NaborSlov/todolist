@@ -1,4 +1,4 @@
-name: Build_and_deploy action
+name: Build_and_deploy_action
 on: [ push ]
 jobs:
   build and push:
