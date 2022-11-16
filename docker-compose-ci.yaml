@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  front:
+    image: sermalenk/skypro-front:lesson-34
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  api:
+    image: naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .docker_env-ci:/app/.env
+
+  migration:
+    image: naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python manage.py migrate
+    volumes:
+      - .docker_env-ci:/app/.env
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U todolist" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres_data:

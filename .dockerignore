@@ -1,0 +1,7 @@
+.env
+.env.example
+.docker_env
+poetry.lock
+pyproject.toml
+/postgresql
+
