@@ -12,7 +12,9 @@ jobs:
       - name: clone code
         uses: actions/checkout@v2
       - name: render config docker_env
-        run: cat .docker_env-ci | envsubst > .docker_env
+        run: |
+          cat .docker_env-ci | envsubst > .docker_env
+          cat .docker_env
       - name: docker build
         run: docker build -t naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
       - name: login to Docker hub
