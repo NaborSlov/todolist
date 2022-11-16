@@ -1,7 +1,7 @@
 name: Build_and_deploy_action
 on: [ push ]
 jobs:
-  build and push:
+  build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: clone code
