@@ -33,14 +33,19 @@ jobs:
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
           cat .docker_env-ci | envsubst > deploy/.docker_env
       - name: clone files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: tdlist.ga
+        image: appleboy/drone-scp
+        setting:
+          host:
+            - tdlist.ga
           username: deploy
-          password: nc5LCt0L~g
-          source: "deploy/docker-compose.yaml,deploy/.docker_env"
-          target: "app"
-          strip_components: 1
+          password:
+            from_secret: nc5LCt0L~g
+          port: 22
+          command_timeout: 2m
+          target: /app
+          source:
+            - deploy/docker-compose.yaml
+            - deploy/.docker_env
       - name: run docker-compose
         uses: appleboy/ssh-action@master
         with:
