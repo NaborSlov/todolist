@@ -16,7 +16,7 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - /.docker_env:/app/.env
+      - ./.docker_env:/app/.env
 
   migration:
     image: naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -25,7 +25,7 @@ services:
         condition: service_healthy
     command: python manage.py migrate
     volumes:
-      - /.docker_env:/app/.env
+      - ./.docker_env:/app/.env
 
   postgres:
     image: postgres:latest
