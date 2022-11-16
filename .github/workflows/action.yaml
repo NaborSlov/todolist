@@ -35,7 +35,7 @@ jobs:
       - name: clone files to server
         uses: appleboy/scp-action@master
         with:
-          host: tdlist.ga
+          host: 158.160.36.70
           username: deploy
           password: nc5LCt0L~g
           source: "deploy/docker-compose.yaml,deploy/.docker_env"
