@@ -35,9 +35,9 @@ jobs:
       - name: clone files to server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          host: tdlist.ga
+          username: deploy
+          password: nc5LCt0L~g
           source: "deploy/docker-compose.yaml,deploy/.docker_env"
           target: "app"
           strip_components: 1
