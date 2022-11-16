@@ -37,7 +37,8 @@ jobs:
         with:
           host: 158.160.36.70
           username: deploy
-          password: nc5LCt0L~g
+          password:
+            from_secret: nc5LCt0L~g
           source: "deploy/docker-compose.yaml,deploy/.docker_env"
           target: "app"
           strip_components: 1
