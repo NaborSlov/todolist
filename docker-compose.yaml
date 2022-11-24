@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   front:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-35
     ports:
       - "80:80"
     depends_on:
@@ -31,12 +31,14 @@ services:
 
   postgres:
     image: postgres:latest
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_USER: nikdeploy
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: todolist
+      POSTGRES_PASSWORD: todolist
       POSTGRES_DB: todolist
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U nikdeploy" ]
+      test: [ "CMD-SHELL", "pg_isready -U todolist" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -46,3 +48,4 @@ services:
 
 volumes:
   postgres_data:
+

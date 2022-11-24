@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+
 import environ
 
 env = environ.Env(
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'social_django',
     'core',
 ]
 
@@ -123,3 +126,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings VKOAuth2
+SOCIAL_AUTH_VK_OAUTH2_KEY = "51485725"
+SOCIAL_AUTH_VK_OAUTH2_SECRET = "muTXVl4eZAxuZhVEm9hP"
+
+SOCIAL_AUTH_JSONFIELD_ENABLE = True
+
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.vk.VKOAuth2',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+

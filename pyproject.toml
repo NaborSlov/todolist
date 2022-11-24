@@ -10,6 +10,8 @@ python = "^3.10"
 django-environ = "^0.9.0"
 psycopg2 = "^2.9.5"
 Django = "4.0.1"
+djangorestframework = "^3.14.0"
+social-auth-app-django = "^5.0.0"
 
 
 [build-system]
