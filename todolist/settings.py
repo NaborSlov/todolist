@@ -133,10 +133,13 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = "muTXVl4eZAxuZhVEm9hP"
 
 SOCIAL_AUTH_JSONFIELD_ENABLE = True
 
-# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-# AUTHENTICATION_BACKENDS = (
-#     'social_core.backends.vk.VKOAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
 
