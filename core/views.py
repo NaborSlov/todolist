@@ -1,7 +1,6 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout, get_user
-from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -28,8 +27,8 @@ class UserRegistrationView(CreateAPIView):
 
             obj = serializer.data
             del obj['password_repeat']
-            obj['password'] = make_password(obj.get('password'))
-            self.queryset.create(**obj)
+            User.objects.create_user(username=obj.pop('username'), password=obj.pop('password'), **obj)
+
             response = {
                 'status': 'success',
                 'code': status.HTTP_201_CREATED,
