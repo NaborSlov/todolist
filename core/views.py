@@ -26,7 +26,7 @@ class UserRegistrationView(CreateAPIView):
                 return Response({"password_repeat": ["Пароли не совпадают"]}, status=status.HTTP_400_BAD_REQUEST)
 
             obj = serializer.data
-            del obj['password_repeat']
+            del obj['password_repeat']  # удаление поля перед созданием User, которого нет в модели
             User.objects.create_user(username=obj.pop('username'), password=obj.pop('password'), **obj)
 
             response = {
@@ -46,9 +46,15 @@ class UserLoginView(View):
     def post(self, request):
         data = json.loads(request.body)
         username = data.get('username')
+        if username in [None, '']:
+            return JsonResponse({"username": ["Введите username"]}, status=status.HTTP_400_BAD_REQUEST)
+
         password = data.get('password')
+        if password in [None, '']:
+            return JsonResponse({"password": ["Введите password"]}, status=status.HTTP_400_BAD_REQUEST)
+
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user:
             login(request, user)
             return JsonResponse(UserLoginSerializer(user).data)
 
