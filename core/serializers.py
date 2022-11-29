@@ -40,6 +40,7 @@ class UserRetrieveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER_MODEL
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        read_only_fields = ('id',)
 
 
 class UserChangePasswordSerializer(serializers.ModelSerializer):
