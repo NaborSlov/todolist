@@ -1,26 +1,25 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import pagination, filters
+from rest_framework import filters
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
-from goals import serializers
 from goals.filters import GoalDateFilter
-from goals.models.goal import Goal
-from goals.models.goal_category import GoalCategory
-from goals.models.goal_comment import GoalComment
+from goals import models
+from goals import serializers
 
 
 class CreateGoalCatView(CreateAPIView):
-    model = GoalCategory
+    model = models.GoalCategory
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.CreateGoalCatSerializer
 
 
 class GoalCategoryListView(ListAPIView):
-    model = GoalCategory
+    model = models.GoalCategory
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.GoalCategorySerializer
-    pagination_class = pagination.LimitOffsetPagination
+    pagination_class = LimitOffsetPagination
     filter_backends = (
         filters.OrderingFilter,
         filters.SearchFilter,
@@ -35,7 +34,7 @@ class GoalCategoryListView(ListAPIView):
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
-    model = GoalCategory
+    model = models.GoalCategory
     serializer_class = serializers.GoalCategorySerializer
     permission_classes = (IsAuthenticated,)
 
@@ -49,15 +48,15 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
 
 
 class GoalCreateView(CreateAPIView):
-    model = Goal
+    model = models.Goal
     serializer_class = serializers.CreateGoalSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class GoalListView(ListAPIView):
-    model = Goal
+    model = models.Goal
     serializer_class = serializers.GoalSerializer
-    pagination_class = pagination.LimitOffsetPagination
+    pagination_class = LimitOffsetPagination
     permission_classes = (IsAuthenticated,)
     filter_backends = [
         DjangoFilterBackend,
@@ -69,24 +68,24 @@ class GoalListView(ListAPIView):
 
 
 class GoalView(RetrieveUpdateDestroyAPIView):
-    model = Goal
+    model = models.Goal
     serializer_class = serializers.GoalSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class GoalCommentCreateView(CreateAPIView):
-    model = GoalComment
+    model = models.GoalComment
     serializer_class = serializers.CreateGoalCommentSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class GoalCommentListView(ListAPIView):
-    model = GoalComment
+    model = models.GoalComment
     serializer_class = serializers.GoalCommentSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class GoalCommentView(RetrieveUpdateDestroyAPIView):
-    model = GoalComment
+    model = models.GoalComment
     serializer_class = serializers.GoalCommentSerializer
     permission_classes = (IsAuthenticated,)
