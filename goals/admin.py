@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from goals import models
+from goals.models.goal_category import GoalCategory
 
 
-@admin.register(models.GoalCategory)
+@admin.register(GoalCategory)
 class GoalCategoryAdmin(admin.ModelAdmin):
-    list_display = ("title", "user", "create", "update")
+    list_display = ("title", "user", "created", "updated")
     search_fields = ("title", "user__username")
