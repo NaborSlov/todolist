@@ -1,9 +1,7 @@
 from rest_framework import serializers
 
 from core.serializers import UserRetrieveUpdateSerializer
-from goals.models.goal import Goal
-from goals.models.goal_category import GoalCategory
-from goals.models.goal_comment import GoalComment
+from goals.models import GoalCategory, Goal, GoalComment
 
 
 class CreateGoalCatSerializer(serializers.ModelSerializer):
