@@ -62,4 +62,3 @@ class PasswordUpdateView(UpdateAPIView):
     def get_object(self):
         obj = get_user(self.request)
         return obj
-

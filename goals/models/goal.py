@@ -27,7 +27,8 @@ class Goal(DatesModelMixin):
         verbose_name_plural = "Цель"
 
     user = models.ForeignKey(USER_MODEL, verbose_name='Автор', on_delete=models.CASCADE)
-    category = models.ForeignKey(GoalCategory, verbose_name='Категория', on_delete=models.CASCADE)
+    category = models.ForeignKey(GoalCategory, verbose_name='Категория', on_delete=models.CASCADE,
+                                 related_name='goals')
     title = models.CharField(verbose_name="Название", max_length=255)
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     status = models.PositiveSmallIntegerField(
@@ -41,5 +42,3 @@ class Goal(DatesModelMixin):
         default=Priority.medium,
     )
     due_date = models.DateTimeField(verbose_name='Дедлайн', blank=True, null=True)
-
-
