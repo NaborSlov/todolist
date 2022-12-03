@@ -45,7 +45,7 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, instance):
         instance.is_deleted = True
 
-        for goal in instance.goals:
+        for goal in instance.goals.all():
             goal.status = Status.archived
             goal.save()
 
@@ -84,6 +84,11 @@ class GoalView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
+
+    def perform_destroy(self, instance):
+        instance.status = Status.archived
+        instance.save()
+        return instance
 
 
 class GoalCommentCreateView(CreateAPIView):
