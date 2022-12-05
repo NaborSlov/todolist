@@ -7,24 +7,22 @@ from goals.models.goal_category import GoalCategory
 USER_MODEL = get_user_model()
 
 
-class Status(models.IntegerChoices):
-    to_do = 1, "К выполнению"
-    in_progress = 2, "В процессе"
-    done = 3, "Выполнено"
-    archived = 4, "Архив"
-
-
-class Priority(models.IntegerChoices):
-    low = 1, "Низкий"
-    medium = 2, "Средний"
-    high = 3, "Высокий"
-    critical = 4, "Критический"
-
-
 class Goal(DatesModelMixin):
     class Meta:
         verbose_name = "Цель"
         verbose_name_plural = "Цель"
+
+    class Status(models.IntegerChoices):
+        to_do = 1, "К выполнению"
+        in_progress = 2, "В процессе"
+        done = 3, "Выполнено"
+        archived = 4, "Архив"
+
+    class Priority(models.IntegerChoices):
+        low = 1, "Низкий"
+        medium = 2, "Средний"
+        high = 3, "Высокий"
+        critical = 4, "Критический"
 
     user = models.ForeignKey(USER_MODEL, verbose_name='Автор', on_delete=models.CASCADE)
     category = models.ForeignKey(GoalCategory, verbose_name='Категория', on_delete=models.CASCADE,

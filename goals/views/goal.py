@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from goals import models, serializers
 from goals.filters import GoalDateFilter
-from goals.models.goal import Status
+
 
 
 class GoalCreateView(CreateAPIView):
@@ -26,7 +26,8 @@ class GoalListView(ListAPIView):
         filters.OrderingFilter
     ]
     filterset_class = GoalDateFilter
-    ordering_fields = ("title", "id",)
+    ordering_fields = ("-priority", "due_day",)
+    ordering = ("-priority", )
     search_fields = ("title",)
 
     def get_queryset(self):
@@ -42,7 +43,7 @@ class GoalView(RetrieveUpdateDestroyAPIView):
         return self.model.objects.filter(user=self.request.user)
 
     def perform_destroy(self, instance):
-        instance.status = Status.archived
+        instance.status = self.model.Status.archived
         instance.save()
         return instance
 

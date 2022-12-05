@@ -4,7 +4,6 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
 from goals import models, serializers
-from goals.models.goal import Status
 
 
 class CreateGoalCatView(CreateAPIView):
@@ -43,7 +42,7 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
         instance.is_deleted = True
 
         for goal in instance.goals.all():
-            goal.status = Status.archived
+            goal.status = goal.Status.archived
             goal.save()
 
         instance.save()

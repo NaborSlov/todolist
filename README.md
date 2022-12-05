@@ -24,6 +24,9 @@ Django==4.0.1
 * DEBUG=True (или False) - включения или выключения дебагера django
 * SECRET_KEY=*секретный ключ*
 * DATABASE_URL=psql://<имя пользователя>:<пароль пользователя>@<ip адрес>:<порт>/<имя базы>
+* SOCIAL_AUTH_VK_OAUTH2_KEY=ключ приложения ВК
+* SOCIAL_AUTH_VK_OAUTH2_SECRET=секрет приложения ВК
+
 
 ### Запуск проекта Django:
 
