@@ -18,6 +18,7 @@ class BoardParticipant(DatesModelMixin):
         verbose_name_plural = "Участники доски"
         unique_together = ("user", "board")
 
+
     class Role(models.IntegerChoices):
         owner = 1, "Владелец"
         writer = 2, "Редактор"
