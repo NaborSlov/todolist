@@ -18,12 +18,11 @@ class BoardParticipant(DatesModelMixin):
         verbose_name_plural = "Участники доски"
         unique_together = ("user", "board")
 
-
     class Role(models.IntegerChoices):
         owner = 1, "Владелец"
         writer = 2, "Редактор"
         reader = 3, "Читатель"
 
-    user = models.ForeignKey("core.User", verbose_name='Автор', on_delete=models.PROTECT, related_name="users")
-    board = models.ForeignKey(Board, verbose_name="Доска", on_delete=models.PROTECT, related_name="many_board")
+    user = models.ForeignKey("core.User", verbose_name='Автор', on_delete=models.PROTECT, related_name="participants")
+    board = models.ForeignKey(Board, verbose_name="Доска", on_delete=models.PROTECT, related_name="participants")
     role = models.PositiveSmallIntegerField(verbose_name="Роль", choices=Role.choices, default=Role.owner)

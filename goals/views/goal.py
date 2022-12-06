@@ -8,7 +8,6 @@ from goals import models, serializers
 from goals.filters import GoalDateFilter
 
 
-
 class GoalCreateView(CreateAPIView):
     model = models.Goal
     serializer_class = serializers.CreateGoalSerializer
@@ -27,7 +26,7 @@ class GoalListView(ListAPIView):
     ]
     filterset_class = GoalDateFilter
     ordering_fields = ("-priority", "due_day",)
-    ordering = ("-priority", )
+    ordering = ("-priority",)
     search_fields = ("title",)
 
     def get_queryset(self):
@@ -46,5 +45,3 @@ class GoalView(RetrieveUpdateDestroyAPIView):
         instance.status = self.model.Status.archived
         instance.save()
         return instance
-
-
