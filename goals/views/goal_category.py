@@ -1,4 +1,5 @@
 from django.db import transaction
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import LimitOffsetPagination
@@ -19,16 +20,16 @@ class GoalCategoryListView(ListAPIView):
     serializer_class = serializers.GoalCategorySerializer
     pagination_class = LimitOffsetPagination
     filter_backends = (
+        DjangoFilterBackend,
         filters.OrderingFilter,
         filters.SearchFilter,
     )
+    filterset_fields = ('board',)
     ordering_fields = ("title", "created",)
     search_fields = ("title",)
 
     def get_queryset(self):
-        return self.model.objects.filter(
-            user=self.request.user, is_deleted=False
-        )
+        return self.model.objects.filter(is_deleted=False, board__participants__user=self.request.user)
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
@@ -37,7 +38,7 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user, is_deleted=False)
+        return self.model.objects.filter(is_deleted=False, board__participants__user=self.request.user)
 
     def perform_destroy(self, instance):
         with transaction.atomic():

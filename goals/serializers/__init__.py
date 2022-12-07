@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .goal import GoalSerializer, CreateGoalSerializer
 from .goal_comment import GoalCommentSerializer, CreateGoalCommentSerializer
 from .goal_category import GoalCategorySerializer, CreateGoalCatSerializer
-from .board import BoardSerializer, BoardParticipantSerializer, BoardCreateSerializer
+from .board import BoardSerializer, BoardParticipantSerializer, BoardCreateSerializer, BoardListSerializer
 
 __all__ = (
     'serializers',
@@ -15,4 +15,5 @@ __all__ = (
     'BoardSerializer',
     'BoardParticipantSerializer',
     'BoardCreateSerializer',
+    'BoardListSerializer'
 )

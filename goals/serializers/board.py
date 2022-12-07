@@ -5,6 +5,12 @@ from core.models import User
 from goals import models
 
 
+class BoardListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Board
+        fields = '__all__'
+
+
 class BoardCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
@@ -62,7 +68,7 @@ class BoardSerializer(serializers.ModelSerializer):
                     new_by_part.pop(old_participant.user_id)
 
             for new_part in new_by_part.values():
-                models.BoardParticipant.objects.created(
+                models.BoardParticipant.objects.create(
                     board=instance, user=new_part['user'], role=new_part['role']
                 )
 
