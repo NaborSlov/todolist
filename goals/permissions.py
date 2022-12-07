@@ -3,6 +3,9 @@ from django.db.models import Q
 
 from goals import models
 
+ROLE_SEARCH = (Q(board__participants__role=models.BoardParticipant.Role.owner) |
+               Q(board__participants__role=models.BoardParticipant.Role.writer))
+
 
 class BoardPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -25,13 +28,40 @@ class CategoryPermission(permissions.BasePermission):
             return False
 
         if request.method in permissions.SAFE_METHODS:
-            return models.GoalCategory.objects.filter(board__participants__user=request.user).exists()
+            return models.BoardParticipant.objects.filter(user=request.user, board=obj.board).exists()
 
-        role_search = (Q(board__participants__role=models.BoardParticipant.Role.owner) |
-                       Q(board__participants__role=models.BoardParticipant.Role.writer))
+        return models.BoardParticipant.objects.filter(
+            user=request.user,
+            board=obj.board,
+            role__in=[models.BoardParticipant.Role.owner, models.BoardParticipant.Role.writer]
+        ).exists()
 
-        return models.GoalCategory.objects.filter(
-            role_search,
-            board__participants__user=request.user,
-            id=obj.id,
+
+class GoalPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if not request.user.is_authenticated:
+            return False
+
+        if request.method in permissions.SAFE_METHODS:
+            return models.BoardParticipant.objects.filter(user=request.user, board=obj.category.board).exists()
+
+        return models.BoardParticipant.objects.filter(
+            user=request.user,
+            board=obj.category.board,
+            role__in=[models.BoardParticipant.Role.owner, models.BoardParticipant.Role.writer]
+        ).exists()
+
+
+class GoalCommentPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if not request.user.is_authenticated:
+            return False
+
+        if request.method in permissions.SAFE_METHODS:
+            return models.BoardParticipant.objects.filter(user=request.user, board=obj.goal.category.board).exists()
+
+        return models.BoardParticipant.objects.filter(
+            user=request.user,
+            board=obj.goal.category.board,
+            role__in=[models.BoardParticipant.Role.owner, models.BoardParticipant.Role.writer]
         ).exists()

@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from goals import models, serializers
 from goals.filters import GoalDateFilter
+from goals.permissions import GoalPermission
 
 
 class GoalCreateView(CreateAPIView):
@@ -18,7 +19,7 @@ class GoalListView(ListAPIView):
     model = models.Goal
     serializer_class = serializers.GoalSerializer
     pagination_class = LimitOffsetPagination
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (GoalPermission,)
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -30,16 +31,16 @@ class GoalListView(ListAPIView):
     search_fields = ("title",)
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(category__board__participants__user=self.request.user)
 
 
 class GoalView(RetrieveUpdateDestroyAPIView):
     model = models.Goal
     serializer_class = serializers.GoalSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (GoalPermission,)
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(category__board__participants__user=self.request.user)
 
     def perform_destroy(self, instance):
         instance.status = self.model.Status.archived
