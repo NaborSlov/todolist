@@ -46,8 +46,5 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
             instance.is_deleted = True
             instance.save()
             instance.goals.update(status=models.Goal.Status.archived)
-            for goal in instance.goals.all():
-                goal.status = goal.Status.archived
-                goal.save()
 
         return instance

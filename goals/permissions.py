@@ -3,9 +3,6 @@ from django.db.models import Q
 
 from goals import models
 
-ROLE_SEARCH = (Q(board__participants__role=models.BoardParticipant.Role.owner) |
-               Q(board__participants__role=models.BoardParticipant.Role.writer))
-
 
 class BoardPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):

@@ -2,7 +2,11 @@ version: "3.9"
 
 services:
   front:
-    image: sermalenk/skypro-front:lesson-37
+<<<<<<< HEAD
+    image: sermalenk/skypro-front:lesson-38
+=======
+    image: sermalenk/skypro-front:lesson-38
+>>>>>>> dev
     ports:
       - "80:80"
     depends_on:

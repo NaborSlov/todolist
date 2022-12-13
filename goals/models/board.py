@@ -11,6 +11,9 @@ class Board(DatesModelMixin):
     title = models.CharField(max_length=255, verbose_name="Название доски")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалена")
 
+    def __str__(self):
+        return self.title
+
 
 class BoardParticipant(DatesModelMixin):
     class Meta:
@@ -26,3 +29,6 @@ class BoardParticipant(DatesModelMixin):
     user = models.ForeignKey("core.User", verbose_name='Автор', on_delete=models.PROTECT, related_name="participants")
     board = models.ForeignKey(Board, verbose_name="Доска", on_delete=models.PROTECT, related_name="participants")
     role = models.PositiveSmallIntegerField(verbose_name="Роль", choices=Role.choices, default=Role.owner)
+
+    def __str__(self):
+        return f"Доска{self.user.username}"
