@@ -30,7 +30,3 @@ class TgClient:
         json_data['result']['from_'] = json_data['result'].pop('from')
         result = send_message_schema().load(json_data)
         return result
-
-#
-# test_tg = TgClient(token="5643100545:AAFRNjbf4uO_gpezKbgG2juoZJlsSie6-dw")
-# print(test_tg.get_updates())

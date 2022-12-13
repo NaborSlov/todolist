@@ -19,6 +19,19 @@ services:
     volumes:
       - ./.docker_env:/app/.env
 
+  bot:
+    build:
+      context: .
+    restart: always
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    command: python manage.py runbot
+    volumes:
+      - ./.docker_env:/app/.env
+
   migration:
     build:
       context: .

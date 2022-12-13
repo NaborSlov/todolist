@@ -15,6 +15,7 @@ class MessageFrom:
     class Meta:
         unknown = marshmallow.EXCLUDE
 
+
 @dataclass
 class Chat:
     id: int
