@@ -1,5 +1,3 @@
-import os
-
 from rest_framework import serializers
 
 from bot.models import TgUser
