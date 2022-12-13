@@ -15,11 +15,14 @@ class TgClient:
         json_data = response.json()
 
         for result in json_data['result']:
+            if not result.get('message', None):
+                json_data['result'].remove(result)
+
+        for result in json_data['result']:
             result['message']['from_'] = result['message'].pop('from')
 
         result = get_updates_schema().load(json_data)
         return result
-
 
     def send_message(self, chat_id: int, text: str) -> SendMessageResponse:
         response = requests.get(self.get_url(f"sendMessage?chat_id={chat_id}&text={text}"))
@@ -28,3 +31,6 @@ class TgClient:
         result = send_message_schema().load(json_data)
         return result
 
+#
+# test_tg = TgClient(token="5643100545:AAFRNjbf4uO_gpezKbgG2juoZJlsSie6-dw")
+# print(test_tg.get_updates())
