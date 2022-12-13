@@ -18,6 +18,17 @@ services:
     volumes:
       - .docker_env:/app/.env
 
+  bot:
+    image: naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    command: python manage.py runbot
+    volumes:
+      - .docker_env:/app/.env
+
   migration:
     image: naborslov/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     depends_on:
