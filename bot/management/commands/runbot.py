@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 text=f"{goal.title}\n"
                      f"Категория - {goal.category}\n"
                      f"Приоритет - {goal.Priority.choices[goal.priority - 1][1]}\n"
-                     f"Дедлайн - {goal.due_date}"
+                     f"Дедлайн - {goal.due_date.strftime('%Y-%m-%d')}"
             )
 
     def create_goal(self, category: GoalCategory, user_tg: TgUser):
@@ -67,7 +67,7 @@ class Command(BaseCommand):
 
         self.tg_client.send_message(
             chat_id=user_tg.chat_id,
-            text=("\nВыберете категорию." +
+            text=("Выберете категорию.\n" +
                   "\n".join([category for category in categories_dict.keys()]) +
                   "\nВведите её название:")
         )
