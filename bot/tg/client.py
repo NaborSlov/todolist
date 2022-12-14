@@ -7,7 +7,7 @@ class TgClient:
     def __init__(self, token):
         self.token = token
 
-    def get_url(self, method: str):
+    def get_url(self, method: str) -> str:
         return f"https://api.telegram.org/bot{self.token}/{method}"
 
     def get_updates(self, offset: int = 0, timeout: int = 60) -> GetUpdatesResponse:
@@ -17,7 +17,7 @@ class TgClient:
 
         return result
 
-    def send_message(self, chat_id: int, text: str) -> SendMessageResponse:
+    def send_message(self, chat_id: str, text: str) -> SendMessageResponse:
         response = requests.get(self.get_url(f"sendMessage?chat_id={chat_id}&text={text}"))
         json_data = response.json()
         result = send_message_schema().load(json_data)

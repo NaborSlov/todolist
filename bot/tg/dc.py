@@ -7,7 +7,7 @@ import marshmallow_dataclass
 
 @dataclass
 class MessageFrom:
-    id: int
+    id: str
     is_bot: bool
     first_name: str
     username: str
@@ -18,7 +18,7 @@ class MessageFrom:
 
 @dataclass
 class Chat:
-    id: int
+    id: str
     username: str
     first_name: str
     type: str
