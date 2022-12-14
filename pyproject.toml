@@ -17,6 +17,7 @@ drf-spectacular = "^0.24.2"
 django-filter = "^22.1"
 marshmallow-dataclass = "^8.5.10"
 requests = "^2.28.1"
+mypy = "^0.991"
 
 
 [build-system]

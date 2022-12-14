@@ -47,9 +47,9 @@ class TgBot:
         self.tg_client.send_message(
             chat_id=user_tg.chat_id,
             text=("Выберете категорию:\n" +
-                  "-" * 10 +
+                  "-" * 10 + "\n" +
                   "\n".join([category for category in categories_dict.keys()]) +
-                  "-" * 10)
+                  "\n" + "-" * 10)
         )
 
         flag = True
@@ -88,7 +88,7 @@ class TgBot:
                      f"Дедлайн - {goal.due_date.strftime('%Y-%m-%d') if goal.due_date else 'Не указан'}"
             )
 
-    def check_user(self, user_ud: str, chat_id: str) -> TgUser | bool:
+    def check_user(self, user_ud: int, chat_id: int) -> TgUser | bool:
         user_tg, created = TgUser.objects.get_or_create(user_ud=user_ud, chat_id=chat_id)
 
         ver_cod = generator_code_verification()

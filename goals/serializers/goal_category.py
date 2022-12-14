@@ -19,7 +19,7 @@ class CreateGoalCatSerializer(serializers.ModelSerializer):
             user=attrs.get('user'),
             board=attrs.get('board'),
             role__in=[models.BoardParticipant.Role.owner, models.BoardParticipant.Role.writer]
-        )
+        ).exists()
 
         if not role_user:
             raise ValidationError("Недостаточно прав")
