@@ -8,10 +8,11 @@ from goals.models import Goal, GoalCategory, BoardParticipant
 
 class Command(BaseCommand):
     help = "Get message from tg bot"
-    tg_client = tg_client
-    model_goal = Goal
-    model_cat = GoalCategory
-    offset = 0
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.tg_client = tg_client
+        self.offset = 0
 
     def get_goals_user(self, user_tg: TgUser):
         goals = (Goal.objects.filter(category__board__participants__user=user_tg.user).
@@ -43,6 +44,7 @@ class Command(BaseCommand):
                 if item.message.text == "/cancel":
                     self.tg_client.send_message(chat_id=user_tg.chat_id, text="Операция отменена")
                     flag = False
+
                 else:
                     goal = Goal.objects.create(category=category, user=user_tg.user, title=item.message.text)
                     self.tg_client.send_message(
@@ -89,17 +91,11 @@ class Command(BaseCommand):
                     self.tg_client.send_message(chat_id=user_tg.chat_id, text=f"Такой категории нет")
 
     def check_user(self, user_ud: str, chat_id: str) -> TgUser | bool:
-        try:
-            user_tg = TgUser.objects.get(user_ud=user_ud)
-        except TgUser.DoesNotExist:
-            user_tg = None
+        user_tg, created = TgUser.objects.get_or_create(user_ud=user_ud, chat_id=chat_id)
 
         ver_cod = generator_code_verification()
 
-        if not user_tg:
-            user_tg = TgUser.objects.create(user_ud=user_ud,
-                                            chat_id=chat_id,
-                                            verification_code=ver_cod)
+        if created:
             self.tg_client.send_message(
                 chat_id=user_tg.chat_id,
                 text=f"Привет новый пользователь\n"
