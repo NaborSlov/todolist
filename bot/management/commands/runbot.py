@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 text=f"{goal.title}\n"
                      f"Категория - {goal.category}\n"
                      f"Приоритет - {goal.Priority.choices[goal.priority - 1][1]}\n"
-                     f"Дедлайн - {goal.due_date.strftime('%Y-%m-%d')}"
+                     f"Дедлайн - {goal.due_date.strftime('%Y-%m-%d') if goal.due_date else 'Не указан'}"
             )
 
     def create_goal(self, category: GoalCategory, user_tg: TgUser):
