@@ -13,6 +13,7 @@ class TgClient:
     def get_updates(self, offset: int = 0, timeout: int = 60) -> GetUpdatesResponse:
         response = requests.get(self.get_url(f"getUpdates?offset={offset}&timeout={timeout}"))
         json_data = response.json()
+        print(json_data)
         result = get_updates_schema().load(json_data)
 
         return result
