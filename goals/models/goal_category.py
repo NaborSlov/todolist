@@ -16,6 +16,7 @@ class GoalCategory(DatesModelMixin):
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
     board = models.ForeignKey("goals.Board", verbose_name="Доска", on_delete=models.PROTECT, related_name="categories")
 
+
     def __str__(self):
         return self.title
 

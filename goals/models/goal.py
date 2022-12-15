@@ -40,3 +40,5 @@ class Goal(DatesModelMixin):
         default=Priority.medium,
     )
     due_date = models.DateTimeField(verbose_name='Дедлайн', blank=True, null=True)
+
+
