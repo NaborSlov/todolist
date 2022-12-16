@@ -10,18 +10,15 @@ class TgUserUpdate(generics.UpdateAPIView):
     model = TgUser
     serializer_class = TgUserVerCodSerializer
     permission_classes = (IsAuthenticated,)
+    http_method_names = ("patch",)
 
     def get_object(self):
         try:
-            user = self.model.objects.get(verification_code=self.request.data.get('verification_code'))
+            obj = self.model.objects.get(verification_code=self.request.data.get('verification_code'))
         except self.model.DoesNotExist:
             raise ValidationError({"verification_code": "Неправильный верификационный код"})
 
-        return user
+        return obj
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
-
-
-
-

@@ -42,6 +42,9 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
         return self.model.objects.filter(is_deleted=False, board__participants__user=self.request.user)
 
     def perform_destroy(self, instance):
+        """
+        При удалении категории у нее меняется поле is_deleted на True
+        """
         with transaction.atomic():
             instance.is_deleted = True
             instance.save()

@@ -43,6 +43,9 @@ class GoalView(RetrieveUpdateDestroyAPIView):
         return self.model.objects.filter(category__board__participants__user=self.request.user)
 
     def perform_destroy(self, instance):
+        """
+        При удалении цели у нее меняется поле статус на "В архиве"
+        """
         instance.status = self.model.Status.archived
         instance.save()
         return instance

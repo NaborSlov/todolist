@@ -30,6 +30,11 @@ class BoardView(RetrieveUpdateDestroyAPIView):
         return self.moder.objects.filter(participants__user=self.request.user, is_deleted=False)
 
     def perform_destroy(self, instance):
+        """
+        При удалении доски ее поле is_deleted меняется на True и у всех категорий этой
+        доски поле is_deleted меняется тоже на True.
+        У всех связанных целей поле status меняется на "В архиве"
+        """
         with transaction.atomic():
             instance.is_deleted = True
             instance.save()

@@ -10,8 +10,20 @@ class TgBot:
         self.tg_client = tg_client
 
     def create_goal(self, category: GoalCategory, user_tg: TgUser) -> None:
+        """
+        Метод создания новой цели в выбранной категории
+
+        Args:
+            category: GoalCategory - выбранная категория
+            user_tg: TgUser - пользователь который создает цель
+
+        Returns:
+            None
+
+        """
         self.tg_client.send_message(chat_id=user_tg.chat_id, text=f"Введите заголовок цели")
 
+        # вход в состояния ожидания названия для создаваемой цели
         flag = True
         while flag:
             response = self.tg_client.get_updates(offset=self.offset)
@@ -34,7 +46,7 @@ class TgBot:
 
     def choice_category(self, user_tg: TgUser) -> None:
         """
-        Метод выдает все категории пользователя и просит выбрать из этого
+        Метод выдает все категории пользователя в telegram и просит выбрать из этого
         списка категорию в которой будет создана новая цель.
 
         Args:
@@ -62,6 +74,7 @@ class TgBot:
                   "\n" + "-" * 10)
         )
 
+        # вход в состояния ожидания категории от пользователя
         flag = True
         while flag:
             response = self.tg_client.get_updates(offset=self.offset)
@@ -72,9 +85,11 @@ class TgBot:
                     category_user = categories_dict[item.message.text]
                     self.create_goal(category=category_user, user_tg=user_tg)
                     flag = False
+
                 elif item.message.text == "/cancel":
                     self.tg_client.send_message(chat_id=user_tg.chat_id, text=f"Операция отменена")
                     flag = False
+
                 else:
                     self.tg_client.send_message(chat_id=user_tg.chat_id, text=f"Такой категории нет")
 
@@ -145,7 +160,7 @@ class TgBot:
 
         return user_tg
 
-    def run(self):
+    def run(self) -> None:
         """
         Метод запускает бота
         """

@@ -41,4 +41,5 @@ class Goal(DatesModelMixin):
     )
     due_date = models.DateTimeField(verbose_name='Дедлайн', blank=True, null=True)
 
-
+    def __str__(self):
+        return self.title
