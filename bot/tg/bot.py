@@ -142,6 +142,8 @@ class TgBot:
         ver_cod = generator_code_verification()
 
         if created:
+            user_tg.verification_code = ver_cod
+            user_tg.save()
             self.tg_client.send_message(
                 chat_id=user_tg.chat_id,
                 text=f"Привет новый пользователь\n"
